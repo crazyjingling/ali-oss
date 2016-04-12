@@ -161,7 +161,8 @@ describe.only('test/rtmp.test.js', function () {
       var result = yield this.store.getChannelHistory(this.cid);
 
       assert.equal(result.res.status, 200);
-      assert.equal(result.data.LiveRecord, null);
+      assert(is.array(result.records));
+      assert.equal(result.records.length, 0);
 
       // TODO: verify LiveRecord when history exists
     });
