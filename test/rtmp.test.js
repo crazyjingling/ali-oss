@@ -14,6 +14,7 @@
 
 var assert = require('assert');
 var utils = require('./utils');
+var is = require('is-type-of');
 var oss = require('../');
 var config = require('./config').oss;
 var ms = require('humanize-ms');
@@ -58,6 +59,10 @@ describe.only('test/rtmp.test.js', function () {
 
       var result = yield this.store.putChannel(cid, conf);
       assert.equal(result.res.status, 200);
+      assert(is.array(result.publishUrls));
+      assert(result.publishUrls.length > 0);
+      assert(is.array(result.playUrls));
+      assert(result.playUrls.length > 0);
 
       var result = yield this.store.getChannel(cid);
       assert.equal(result.res.status, 200);
@@ -89,6 +94,8 @@ describe.only('test/rtmp.test.js', function () {
       var result = yield this.store.getChannelStatus(this.cid);
       assert.equal(result.res.status, 200);
       assert.equal(result.data.Status, 'Idle');
+
+      // TODO: verify ConnectedTime/RemoteAddr/Video/Audio when not idle
 
       var result = yield this.store.putChannelStatus(this.cid, 'disabled');
       assert.equal(result.res.status, 200);
@@ -129,6 +136,7 @@ describe.only('test/rtmp.test.js', function () {
       assert.equal(result.data.Prefix, query.prefix);
       assert.equal(result.data.Marker, query.marker);
       assert.equal(result.data.MaxKeys, query['max-keys']);
+      assert.equal(result.data.IsTruncated, 'true');
 
       var channels = result.data.LiveChannel;
       assert.equal(channels.length, 3);
@@ -154,6 +162,8 @@ describe.only('test/rtmp.test.js', function () {
 
       assert.equal(result.res.status, 200);
       assert.equal(result.data.LiveRecord, null);
+
+      // TODO: verify LiveRecord when history exists
     });
   });
 
@@ -170,9 +180,10 @@ describe.only('test/rtmp.test.js', function () {
 
     it('should create vod playlist', function* () {
       var name = 'vod.m3u8';
+      var now = Date.now();
       var result = yield this.store.createVod(this.cid, name, {
-        begin: Date.now() - 100,
-        end: Date.now()
+        startTime: Math.floor((now - 100) / 1000),
+        endTime: Math.floor(now / 1000)
       });
 
       assert.equal(result.res.status, 200);
@@ -199,7 +210,7 @@ describe.only('test/rtmp.test.js', function () {
         expires: 3600
       });
 
-      console.log(url);
+      // TODO: verify the url
     });
   });
 });
