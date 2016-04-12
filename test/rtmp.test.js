@@ -133,12 +133,10 @@ describe.only('test/rtmp.test.js', function () {
       var result = yield this.store.listChannels(query);
 
       assert.equal(result.res.status, 200);
-      assert.equal(result.data.Prefix, query.prefix);
-      assert.equal(result.data.Marker, query.marker);
-      assert.equal(result.data.MaxKeys, query['max-keys']);
-      assert.equal(result.data.IsTruncated, 'true');
+      assert.equal(result.nextMarker, 'channel-list-7');
+      assert.equal(result.isTruncated, true);
 
-      var channels = result.data.LiveChannel;
+      var channels = result.channels;
       assert.equal(channels.length, 3);
       assert.equal(channels[0].Id, this.channelPrefix + 5)
       assert.equal(channels[1].Id, this.channelPrefix + 6)
