@@ -1745,7 +1745,7 @@ var r = yield this.store.createVod(cid, 're-play', {
 console.log(r);
 ```
 
-### .getRtmpUrl(channelId, [, options])
+### .getRtmpUrl(channelId[, options])
 
 Get signatured rtmp url for publishing.
 
