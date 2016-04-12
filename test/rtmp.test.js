@@ -178,4 +178,28 @@ describe.only('test/rtmp.test.js', function () {
       assert.equal(result.res.status, 200);
     });
   });
+
+  describe('getRtmpUrl()', function () {
+    before(function* () {
+      this.cid = 'channel-5';
+      this.conf.Description = 'this is live channel 5';
+      yield this.store.putChannel(this.cid, this.conf);
+    });
+
+    after(function* () {
+      yield this.store.deleteChannel(this.cid);
+    });
+
+    it('should get rtmp url', function* () {
+      var name = 'vod.m3u8';
+      var url = this.store.getRtmpUrl(this.cid, {
+        params: {
+          playlistName: name
+        },
+        expires: 3600
+      });
+
+      console.log(url);
+    });
+  });
 });
