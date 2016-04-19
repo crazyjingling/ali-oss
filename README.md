@@ -1477,7 +1477,7 @@ parameters:
   - [Description] {String} the channel description
   - [Status] {String} the channel status: 'enabled' or 'disabled'
   - [Target] {Object}
-    - [Type] {String} the data type for the channel, only 'hls' is supported now
+    - [Type] {String} the data type for the channel, only 'HLS' is supported now
     - [FragDuration] {Number} duration of a 'ts' segment
     - [FragCount] {Number} the number of 'ts' segments in a 'm3u8'
     - [PlaylistName] {String} the 'm3u8' name
@@ -1502,7 +1502,7 @@ var conf = {
   Description: 'this is channel 1',
   Status: 'enabled',
   Target: {
-    Type: 'hls',
+    Type: 'HLS',
     FragDuration: '10',
     FragCount: '5',
     PlaylistName: 'playlist.m3u8'
