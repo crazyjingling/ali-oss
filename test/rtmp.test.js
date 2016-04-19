@@ -40,7 +40,7 @@ describe.only('test/rtmp.test.js', function () {
       Description: 'this is channel 1',
       Status: 'enabled',
       Target: {
-        Type: 'hls',
+        Type: 'HLS',
         FragDuration: '10',
         FragCount: '5',
         PlaylistName: 'playlist.m3u8'
