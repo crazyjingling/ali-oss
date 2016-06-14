@@ -1659,7 +1659,7 @@ Success will return the channel list.
 object:
 
 - channels {Array} the channels, each in the structure:
-  - Id {String} the channel id
+  - Name {String} the channel id
   - Description {String} the channel description
   - Status {String} the channel status
   - LastModified {String} the last modification time of the channel

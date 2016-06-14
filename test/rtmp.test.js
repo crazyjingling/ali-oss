@@ -27,13 +27,11 @@ describe.only('test/rtmp.test.js', function () {
     this.store = oss(config);
     this.bucket = 'ali-oss-test-bucket-' + prefix.replace(/[\/\.]/g, '-');
     this.bucket = this.bucket.substring(0, this.bucket.length - 1);
-    this.region = config.region;
-    this.bucket = 'ossliveshow';
     this.store.useBucket(this.bucket);
 
-    // var result = yield this.store.putBucket(this.bucket, this.region);
-    // assert.equal(result.bucket, this.bucket);
-    // assert.equal(result.res.status, 200);
+    var result = yield this.store.putBucket(this.bucket, this.region);
+    assert.equal(result.bucket, this.bucket);
+    assert.equal(result.res.status, 200);
 
     this.cid = 'channel-1';
     this.conf = {
@@ -49,7 +47,7 @@ describe.only('test/rtmp.test.js', function () {
   });
 
   after(function* () {
-    // yield utils.cleanBucket(this.store, this.bucket, this.region);
+    yield utils.cleanBucket(this.store, this.bucket, this.region);
   });
 
   describe('put/get/deleteChannel()', function () {
@@ -138,9 +136,9 @@ describe.only('test/rtmp.test.js', function () {
 
       var channels = result.channels;
       assert.equal(channels.length, 3);
-      assert.equal(channels[0].Id, this.channelPrefix + 5)
-      assert.equal(channels[1].Id, this.channelPrefix + 6)
-      assert.equal(channels[2].Id, this.channelPrefix + 7)
+      assert.equal(channels[0].Name, this.channelPrefix + 5)
+      assert.equal(channels[1].Name, this.channelPrefix + 6)
+      assert.equal(channels[2].Name, this.channelPrefix + 7)
     });
   });
 
